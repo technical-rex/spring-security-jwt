@@ -1,7 +1,77 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            com.technicalrex.springsecurityjwt.vendor.SpringConfig
+            com.technicalrex.springsecurityjwt.vendor.SpringSecurityConfig
+        </param-value>
+    </context-param>
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>googleAuthorizationRequest</servlet-name>
+        <servlet-class>com.technicalrex.springsecurityjwt.auth.google.GoogleAuthorizationRequestServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>googleAuthorizationRequest</servlet-name>
+        <url-pattern>/auth/google/request</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>googleAuthorizationResponse</servlet-name>
+        <servlet-class>com.technicalrex.springsecurityjwt.auth.google.GoogleAuthorizationResponseServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>googleAuthorizationResponse</servlet-name>
+        <url-pattern>/auth/google/response</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>jerseyServlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>com.technicalrex.springsecurityjwt.vendor.JerseyConfig</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.response.setStatusOverSendError</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jerseyServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 </web-app>
