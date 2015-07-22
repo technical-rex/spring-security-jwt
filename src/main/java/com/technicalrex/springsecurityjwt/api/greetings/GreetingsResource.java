@@ -1,6 +1,7 @@
 package com.technicalrex.springsecurityjwt.api.greetings;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +19,6 @@ public class GreetingsResource {
 
     @GET
     public Response getJars() {
-        return Response.ok(GREETINGS).build();
+        return Response.ok(ImmutableMap.of("greetings", GREETINGS)).build();
     }
 }

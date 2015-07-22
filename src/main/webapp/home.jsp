@@ -29,6 +29,8 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Logged In as <%=request.getAttribute("email")%></h1>
+        <p>Click the button below to put that stateless authentication to use!</p>
+        <p><a id="sayHello" class="btn btn-info" href="javascript:void(0)" role="button">Say Hello</a></p>
     </div>
 </div>
 
@@ -37,6 +39,19 @@
 <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript">
     var authToken = '<%=request.getAttribute("authToken")%>';
+    $('#sayHello').click(function() {
+        $.ajax({
+            url: '/api/greetings',
+            method: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-AUTH-TOKEN': authToken
+            }
+        }).done(function(json) {
+            var i = Math.floor(Math.random() * json.greetings.length);
+            alert(json.greetings[i].text);
+        });
+    });
 </script>
 </body>
 </html>
