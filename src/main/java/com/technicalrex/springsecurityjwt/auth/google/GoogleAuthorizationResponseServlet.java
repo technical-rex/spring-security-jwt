@@ -79,10 +79,11 @@ public class GoogleAuthorizationResponseServlet extends HttpServlet {
         GoogleTokenResponse tokenResponse = exchangeCodeForAccessAndRefreshTokens(code[0], requestUrl);
         String email = tokenResponse.parseIdToken().getPayload().getEmail();
 
-        establishUserAndLogin(response, email);
+        String token = establishUserAndLogin(response, email);
 
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().append("<html><body><h1>Logged in as ").append(email).append("</h1></body></html>");
+        request.setAttribute("email", email);
+        request.setAttribute("authToken", token);
+        getServletConfig().getServletContext().getRequestDispatcher("/home.jsp").forward(request,response);
     }
 
     private GoogleTokenResponse exchangeCodeForAccessAndRefreshTokens(String code, String currentUrl) throws IOException {
@@ -100,7 +101,7 @@ public class GoogleAuthorizationResponseServlet extends HttpServlet {
         return scheme + serverName + serverPort + contextPath + servletPath + pathInfo;
     }
 
-    private void establishUserAndLogin(HttpServletResponse response, String email) {
+    private String establishUserAndLogin(HttpServletResponse response, String email) {
         // Find user, create if necessary
         User user;
         try {
@@ -112,6 +113,6 @@ public class GoogleAuthorizationResponseServlet extends HttpServlet {
 
         // Login that user
         UserAuthentication authentication = new UserAuthentication(user);
-        tokenAuthenticationService.addAuthentication(response, authentication);
+        return tokenAuthenticationService.addAuthentication(response, authentication);
     }
 }
