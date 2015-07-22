@@ -11,3 +11,5 @@ out
 .settings
 .classpath
 .project
+
+**/my.properties
