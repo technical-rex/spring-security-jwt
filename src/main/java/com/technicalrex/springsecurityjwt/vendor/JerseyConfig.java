@@ -1,6 +1,6 @@
 package com.technicalrex.springsecurityjwt.vendor;
 
-import com.technicalrex.springsecurityjwt.api.jars.JarsResource;
+import com.technicalrex.springsecurityjwt.api.greetings.GreetingsResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
@@ -11,6 +11,6 @@ public class JerseyConfig extends ResourceConfig {
         register(JacksonObjectMapperConfig.class);
 
         // Application resources
-        register(JarsResource.class);
+        register(GreetingsResource.class);
     }
 }
