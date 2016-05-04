@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.User;
 import java.util.Base64;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public final class TokenHandler {
 
@@ -27,8 +29,12 @@ public final class TokenHandler {
     }
 
     public String createTokenForUser(User user) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + TimeUnit.HOURS.toMillis(1l));
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
