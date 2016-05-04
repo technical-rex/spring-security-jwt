@@ -5,6 +5,7 @@ import com.technicalrex.springsecurityjwt.support.validation.StringConditions;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.User;
+import java.util.Base64;
 
 public final class TokenHandler {
 
@@ -12,7 +13,7 @@ public final class TokenHandler {
     private final UserService userService;
 
     public TokenHandler(String secret, UserService userService) {
-        this.secret = StringConditions.checkNotBlank(secret);
+        this.secret = Base64.getEncoder().encodeToString(StringConditions.checkNotBlank(secret).getBytes());
         this.userService = Preconditions.checkNotNull(userService);
     }
 
