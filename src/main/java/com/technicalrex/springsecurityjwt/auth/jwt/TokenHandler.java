@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Base64;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
 public final class TokenHandler {
 
@@ -32,6 +33,7 @@ public final class TokenHandler {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + TimeUnit.HOURS.toMillis(1l));
         return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
                 .setSubject(user.getUsername())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
