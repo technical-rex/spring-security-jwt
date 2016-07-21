@@ -1,6 +1,6 @@
 # Spring Security and JWT Tutorial
 
-This code is primarily intended to supplement the [Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt/)
+This code is primarily intended to supplement the [Stateless Authentication with Spring Security and JWT](http://technicalrex.com/2015/02/20/stateless-authentication-with-spring-security-and-jwt)
 tutorial.
 
 If you pick through the code you can also use this repository to discover strategies
